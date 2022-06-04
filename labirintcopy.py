@@ -28,8 +28,22 @@ class Player(GameSprite):
         self.yspeed = yspeed
     def update(self):
         self.rect.x += self.xspeed
-        self.rect.y += self.yspeed
+        platforms_touched = sprite.spritecollide(self,walls,False)
+        if self.xspeed > 0:
+            for p in platforms_touched:
+                self.rect.right = min(self.rect.right, p.rect.left)
+        elif self.xspeed < 0:
+            for p in platforms_touched:
+                self.rect.left = max(self.rect.left, p.rect.right)
         self.xspeed = 0
+        self.rect.y += self.yspeed
+        platforms_touched = sprite.spritecollide(self,walls,False)
+        if self.yspeed > 0:
+            for p in platforms_touched:
+                self.rect.bottom = min(self.rect.bottom, p.rect.top)
+        elif self.yspeed < 0:
+            for p in platforms_touched:
+                self.rect.top = max(self.rect.top, p.rect.bottom)
         self.yspeed = 0
 
 class TEXT():
@@ -84,7 +98,7 @@ end = GameSprite('Portal.png',100,100,1370,920)
 
 tochki = []
 
-tochka11 = GameSprite('tochka.png',50,50,300,300)
+tochka11 = GameSprite('tochka.png',50,50,200,300)
 tochki.append(tochka11)
 tochka12 = GameSprite('tochka.png',50,50,1025,300)
 tochki.append(tochka12)
@@ -96,9 +110,9 @@ tochka31 = GameSprite('tochka.png',50,50,1195,50)
 tochki.append(tochka31)
 tochka32 = GameSprite('tochka.png',50,50,1195,925)
 tochki.append(tochka32)
-tochka41 = GameSprite('tochka.png',50,50,1385,575)
+tochka41 = GameSprite('tochka.png',50,50,1175,575)
 tochki.append(tochka41)
-tochka42 = GameSprite('tochka.png',50,50,1385,50)
+tochka42 = GameSprite('tochka.png',50,50,1175,50)
 tochki.append(tochka42)
 tochka51 = GameSprite('tochka.png',50,50,1385,750)
 tochki.append(tochka51)
@@ -111,11 +125,11 @@ player = Player('monkey3.png',75,75,15,900,12,8)
 
 bobrs = []
 
-bobr1 = Enemy('BOBR1.png',75,75,300,285,-0.5,0)
-bobr2 = Enemy('BOBR1.png',75,75,300,915,-0.5,0)
-bobr3 = Enemy('BOBR1.png',75,75,1180,925,0,0.267)
-bobr4 = Enemy('BOBR1.png',75,75,1370,50,0,0.267)
-bobr5 = Enemy('BOBR1.png',75,75,1385,735,-0.5,0)
+bobr1 = Enemy('BOBR1.png',75,75,300,285,-1,0)#1
+bobr2 = Enemy('BOBR1.png',75,75,300,915,-1,0)
+bobr3 = Enemy('BOBR1.png',75,75,1180,925,0,1)
+bobr4 = Enemy('BOBR1.png',75,75,1175,150,0,1)#4
+bobr5 = Enemy('BOBR1.png',75,75,1385,735,-1,0)
 
 bobrs.append(bobr1)
 bobrs.append(bobr2)
@@ -192,99 +206,15 @@ while run:
             i.rect.x += i.xspeed
             i.rect.y += i.yspeed
 
-        for i in bobrs:
-            if sprite.collide_rect(i,player):
-                window.blit(lose, (0,0))
-                display.update()
-                player.rect.x = 15
-                player.rect.y = 900
-                sleep(1)
-                window.blit(picture, (0,0))
-        
-
-     
-    # if len(bobrs2) != 0:
-    #     for i in bobrs2:
-    #         i.reset()
-    #     for i in bobrs2:
-    #         if sprite.collide_rect(i,tochka21):
-    #             mbspeed2 += 1
-    #         elif sprite.collide_rect(i,tochka22):
-    #             mbspeed2 -= 1
-        
-    #     for i in bobrs2:
-    #         if sprite.collide_rect(i,player):
-    #             window.blit(lose, (0,0))
-    #             display.update()
-    #             player.rect.x = 15
-    #             player.rect.y = 900
-    #             sleep(1)
-    #             window.blit(picture, (0,0))
-    #     i.rect.x += mbspeed2
-    
-    # if len(bobrs3) != 0:
-    #     for i in bobrs3:
-    #         i.reset()
-    #     for i in bobrs3:
-    #         if sprite.collide_rect(i,tochka22):
-    #             pbspeed3 -= 0.8
-    #         elif sprite.collide_rect(i,tochka31):
-    #             pbspeed3 += 0.8
-        
-    #     for i in bobrs3:
-    #         if sprite.collide_rect(i,player):
-    #             window.blit(lose, (0,0))
-    #             display.update()
-    #             player.rect.x = 15
-    #             player.rect.y = 900
-    #             sleep(1)
-    #             window.blit(picture, (0,0))
-    #     i.rect.y += pbspeed3 
-
-    # if len(bobrs4) != 0:
-    #     for i in bobrs4:
-    #         i.reset()
-    #     for i in bobrs4:
-    #         if sprite.collide_rect(i,tochka41):
-    #             pbspeed4 -= 0.8
-    #         elif sprite.collide_rect(i,tochka42):
-    #             pbspeed4 += 0.8        
-    #     for i in bobrs4:
-    #         if sprite.collide_rect(i,player):
-    #             window.blit(lose, (0,0))
-    #             display.update()
-    #             player.rect.x = 15
-    #             player.rect.y = 900
-    #             sleep(1)
-    #             window.blit(picture, (0,0))
-    #     i.rect.y += pbspeed4        
-              
-
-    # if len(bobrs5) != 0:
-    #     for i in bobrs5:
-    #         i.reset()
-    #     for i in bobrs5:
-    #         if sprite.collide_rect(i,tochka51):
-    #             mbspeed5 += 1 
-    #         elif sprite.collide_rect(i,tochka52):
-    #             mbspeed5 -= 1
-    #     for i in bobrs5:
-    #         if sprite.collide_rect(i,player):
-    #             window.blit(lose, (0,0))
-    #             display.update()
-    #             player.rect.x = 15
-    #             player.rect.y = 900
-    #             sleep(1)
-    #             window.blit(picture, (0,0))
-    #     i.rect.x += mbspeed5          
-
-
-
-   
-    
-    
-
-    
+        # for i in bobrs:
+        #     if sprite.collide_rect(i,player):
+        #         window.blit(lose, (0,0))
+        #         display.update()
+        #         player.rect.x = 15
+        #         player.rect.y = 900
+        #         sleep(1)
+        #         window.blit(picture, (0,0))
+      
     
     if keys_pressed[K_a] and player.rect.x > 5: 
         player.xspeed = -10
