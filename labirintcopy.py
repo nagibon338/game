@@ -42,8 +42,7 @@ class TEXT():
 def create_money():
     moneys = []
     sirnik1 = GameSprite('COIN.png',60,60,690,495)
-    moneys.append(sirnik1)from pygame import *
-from time import sleep
+    moneys.append(sirnik1)
 
 
 class GameSprite(sprite.Sprite):
@@ -97,19 +96,7 @@ class TEXT():
         self.rect.x = x
         self.rect.y = y
 
-def create_money():
-    moneys = []
-    sirnik1 = GameSprite('COIN.png',60,60,690,495)
-    moneys.append(sirnik1)
-    sirnik2 = GameSprite('COIN.png',60,60,1595,500)
-    moneys.append(sirnik2)
-    sirnik3 = GameSprite('COIN.png',60,60,1840,40)
-    moneys.append(sirnik3)
-    sirnik4 = GameSprite('COIN.png',60,60,495,295)
-    moneys.append(sirnik4)
-    sirnik5 = GameSprite('COIN.png',60,60,1190,300)
-    moneys.append(sirnik5)
-    return moneys
+
 
 walls = sprite.Group()
 
@@ -222,12 +209,6 @@ while run:
 
     player.reset()
     
-    if len(moneys) != 0:
-        for i in (moneys):
-            i.reset()
-        for i in (moneys):
-            if sprite.collide_rect(player, i):
-                moneys.remove(i)
     
     
     if len(bobrs) != 0:
@@ -312,15 +293,8 @@ while run:
 
     clock.tick(100)
     display.update()
-    sirnik2 = GameSprite('COIN.png',60,60,1595,500)
-    moneys.append(sirnik2)
-    sirnik3 = GameSprite('COIN.png',60,60,1840,40)
-    moneys.append(sirnik3)
-    sirnik4 = GameSprite('COIN.png',60,60,495,295)
-    moneys.append(sirnik4)
-    sirnik5 = GameSprite('COIN.png',60,60,1190,300)
-    moneys.append(sirnik5)
-    return moneys
+
+
 
 walls = sprite.Group()
 
